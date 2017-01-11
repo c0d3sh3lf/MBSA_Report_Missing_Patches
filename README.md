@@ -5,8 +5,8 @@ Date Published: 11-JAN-2017<br>
 Author: Sumit Shrivastava<br>
 Version: v1.0.0<br>
 
-Options:
--f, --file=FILE MBSA Command Line Report File
--F, --folder=FOLDER Folder containing MBSA Command Line Report Files
+Options:<br>
+-f, --file=FILE MBSA Command Line Report File<br>
+-F, --folder=FOLDER Folder containing MBSA Command Line Report Files<br>
 
 Please report any bugs to bugs.github@invadersam.com
