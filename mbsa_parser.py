@@ -51,19 +51,16 @@ def generate_file_report(file):
     report = parse_file(input_file)
     #code to write output to file
     data = "<!DOCTYPE html><html><head><title>MBSA_Report</title><body>"
-    if len(report["MissingPatches"]) > 0:
-        data+="<table border=1><tr><th align='left'>IP: </th><td colspan='4'>" + report['IP'] + "</th></tr>"
-        data+="<tr><th align='left'>Display Name: </th><td colspan='4'>" + report["DisplayName"] + "</th></tr>"
-        data+="<tr><th align='left'>Scan Date: </th><td colspan='4'>" + report["ScanDate"] + "</th></tr>"
-        data+="<tr><th>Bulletin ID</th><th>Patch ID</th><th>Title</th><th>Type</th><th>Severity</th></tr>"
-        for missing_patch in report["MissingPatches"]:
-            bid, idd, severity, dtype, desc = missing_patch
-            update_type = {"1":"Critical Update", "2":"Security Update", "3":"Defination Update", "4":"Update Rollup", "5":"Service Pack", "6":"Tool", "7":"Feature Pack", "8":"Update"}
-            severity_level = {"0":"", "1":"Low", "2":"Moderate", "3":"Important", "4":"Critical"}
-            data+="<tr><td>" + bid + "</td><td>" + idd + "</td><td>" + desc + "</td><td>" + update_type[dtype] + "</td><td>" + severity_level[severity] + "</td></tr>"
-        data += "</table></body></html>"
-    else:
-        data += "No missing patches for %s (%s) scanned on %s" % (report["DisplayName"], report["IP"], report["ScanDate"])
+    data+="<table border=1><tr><th align='left'>IP: </th><td colspan='4'>" + report['IP'] + "</th></tr>"
+    data+="<tr><th align='left'>Display Name: </th><td colspan='4'>" + report["DisplayName"] + "</th></tr>"
+    data+="<tr><th align='left'>Scan Date: </th><td colspan='4'>" + report["ScanDate"] + "</th></tr>"
+    data+="<tr><th>Bulletin ID</th><th>Patch ID</th><th>Title</th><th>Type</th><th>Severity</th></tr>"
+    for missing_patch in report["MissingPatches"]:
+        bid, idd, severity, dtype, desc = missing_patch
+        update_type = {"1":"Critical Update", "2":"Security Update", "3":"Defination Update", "4":"Update Rollup", "5":"Service Pack", "6":"Tool", "7":"Feature Pack", "8":"Update"}
+        severity_level = {"0":"", "1":"Low", "2":"Moderate", "3":"Important", "4":"Critical"}
+        data+="<tr><td>" + bid + "</td><td>" + idd + "</td><td>" + desc + "</td><td>" + update_type[dtype] + "</td><td>" + severity_level[severity] + "</td></tr>"
+    data += "</table></body></html>"
     op_file.write(data)
     op_file.close()
     print "[+] Output for %s written to %s" %(file, op_filename)
@@ -80,17 +77,16 @@ def generate_folder_report(folder):
     for file in files:
         input_file = open(file, "rt")
         report = parse_file(input_file)
-        if len(report["MissingPatches"]) > 0:
-            data+="<table border=1><tr><th align='left'>IP: </th><td colspan='4'>" + report['IP'] + "</th></tr>"
-            data+="<tr><th align='left'>Display Name: </th><td colspan='4'>" + report["DisplayName"] + "</th></tr>"
-            data+="<tr><th align='left'>Scan Date: </th><td colspan='4'>" + report["ScanDate"] + "</th></tr>"
-            data+="<tr><th>Bulletin ID</th><th>Patch ID</th><th>Title</th><th>Type</th><th>Severity</th></tr>"
-            for missing_patch in report["MissingPatches"]:
-                bid, idd, severity, dtype, desc = missing_patch
-                update_type = {"1":"Critical Update", "2":"Security Update", "3":"Defination Update", "4":"Update Rollup", "5":"Service Pack", "6":"Tool", "7":"Feature Pack", "8":"Update"}
-                severity_level = {"0":"", "1":"Low", "2":"Moderate", "3":"Important", "4":"Critical"}
-                data+="<tr><td>" + bid + "</td><td>" + idd + "</td><td>" + desc + "</td><td>" + update_type[dtype] + "</td><td>" + severity_level[severity] + "</td></tr>"
-            data += "</table><br/><br/>"
+        data+="<table border=1><tr><th align='left'>IP: </th><td colspan='4'>" + report['IP'] + "</th></tr>"
+        data+="<tr><th align='left'>Display Name: </th><td colspan='4'>" + report["DisplayName"] + "</th></tr>"
+        data+="<tr><th align='left'>Scan Date: </th><td colspan='4'>" + report["ScanDate"] + "</th></tr>"
+        data+="<tr><th>Bulletin ID</th><th>Patch ID</th><th>Title</th><th>Type</th><th>Severity</th></tr>"
+        for missing_patch in report["MissingPatches"]:
+            bid, idd, severity, dtype, desc = missing_patch
+            update_type = {"1":"Critical Update", "2":"Security Update", "3":"Defination Update", "4":"Update Rollup", "5":"Service Pack", "6":"Tool", "7":"Feature Pack", "8":"Update"}
+            severity_level = {"0":"", "1":"Low", "2":"Moderate", "3":"Important", "4":"Critical"}
+            data+="<tr><td>" + bid + "</td><td>" + idd + "</td><td>" + desc + "</td><td>" + update_type[dtype] + "</td><td>" + severity_level[severity] + "</td></tr>"
+        data += "</table><br/><br/>"
         print "[+] Output for %s written to %s" %(file, op_filename)
 
     data+="</body></html>"
