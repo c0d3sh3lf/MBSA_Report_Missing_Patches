@@ -2,9 +2,26 @@
 
 #-----------------------------------------
 # Name:        MBSA parser
-# Author:      Sumit Shrivastava
-# Version:     v1.0.0
-#-----------------------------------------
+# Author:      Sumit Shrivastava (@invad3rsam)
+# Version:     v1.0.2
+#
+# Update Log:
+#
+# --Version 1.0.2 - 12-01-2017--
+#     * Added os.path.sep instead of "//" in split function. This removes platform dependency
+#
+# --Version 1.0.1 - 12-01-2017--
+#     * Added code to exclude the 'No missing patches' systems from the report generated from folder input
+#     * Added code to report 'No missing patches found' when the system is fully updated from the report generated from file input
+#
+# --Version 1.0.0 - 11-01-2017--
+#     * This tool extracts missing patches from MBSACLI Report file. It takes single file as well as folder with MBSACLI reports as an input.
+#     * Options:
+#         -f, --file=FILE MBSA Command Line Report File
+#         -F, --folder=FOLDER Folder containing MBSA Command Line Report Files
+#     * Please report any bugs to bugs.github@invadersam.com
+#
+# -----------------------------------------
 
 
 from xml.etree import ElementTree
@@ -12,6 +29,7 @@ import optparse
 import glob
 import string
 import random
+import os
 
 def parse_file(file):
     tree = ElementTree.parse(file)
@@ -44,7 +62,7 @@ def parse_file(file):
     return report
 
 def generate_file_report(file):
-    op_file_split = file.split("\\")
+    op_file_split = file.split(os.path.sep)
     op_filename = op_file_split[len(op_file_split) - 1].replace(" ", "_")[:-5] + "_" + random_code(8) + ".htm"
     op_file = open(op_filename, "w")
     #code to analyse
@@ -70,12 +88,12 @@ def generate_file_report(file):
     print "[+] Output for %s written to %s" %(file, op_filename)
 
 def generate_folder_report(folder):
-    op_folder_name = folder.split("\\")
+    op_folder_name = folder.split(os.path.sep)
     op_filename = op_folder_name[len(op_folder_name) - 1].replace(" ", "_") + "_" + random_code(8) + ".htm"
     op_file = open(op_filename, "w")
     #code to analyse
     data = "<!DOCTYPE html><html><head><title>MBSA_Report</title><body>"
-    files = glob.glob(folder + "\*.mbsa")
+    files = glob.glob(folder + os.path.sep + "*.mbsa")
     
     #code to write output to file
     for file in files:
